@@ -3,3 +3,4 @@
 *.box
 *.pass
 *.log
+*.secret
