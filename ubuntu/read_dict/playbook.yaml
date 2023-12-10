@@ -1,7 +1,7 @@
 ---
 - name: Read Dictionary object
   hosts: rocky
-  vars_files: 
+  vars_files:
     - dict.yaml
   tasks:
     - name: Print dictionary objects
