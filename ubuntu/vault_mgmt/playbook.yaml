@@ -1,0 +1,10 @@
+---
+- name: Create a user
+  hosts: rocky
+  vars_files:
+    - secrets.yaml
+  tasks:
+    - name: Create a user using secret file
+      ansible.builtin.user:
+        name: "{{ username }}"
+        password: "{{ password }}"
