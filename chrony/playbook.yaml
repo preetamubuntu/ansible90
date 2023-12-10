@@ -1,0 +1,15 @@
+# please note if you run dry run, it will give error, that service
+# service does not exist. Keep this in mind.
+---
+- name: Install and configure chrony
+  hosts: webservers
+  tasks:
+    - name: Install chrony
+      ansible.builtin.apt:
+        name: chrony
+        state: present
+    - name: Start chrony service
+      ansible.builtin.service:
+        name: chronyd
+        state: started
+        enabled: true
