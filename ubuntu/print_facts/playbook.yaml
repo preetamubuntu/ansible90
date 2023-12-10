@@ -1,0 +1,13 @@
+# Print ansible facts
+- name: Print facts
+  hosts: rocky
+  tasks:
+    - name: Gather and print facts
+      ansible.builtin.debug:
+        # var: ansible_facts['default_ipv4']
+        msg:
+          - "{{ ansible_facts['default_ipv4'] }}"
+          - "{{ ansible_facts['distribution'] }}"
+          - "{{ ansible_facts['distribution_version'] }}"
+          - "{{ ansible_facts['interfaces'] }}"
+          - "{{ ansible_facts['devices'] }}"

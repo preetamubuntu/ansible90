@@ -1,0 +1,22 @@
+---
+- name: Create a multiline text and copy
+  hosts: webservers
+  tasks:
+    - name: Create a Address and copy
+      ansible.builtin.copy:
+        content: |
+          Preetam Zare
+          Hegelstr 60
+          70174 Stuttgart
+        dest: /tmp/multiline.log
+        owner: root
+        mode: "0644"
+    - name: Add a single line text and copy
+      ansible.builtin.copy:
+        content: >
+          This is though typed as multiline text
+          but it is single line text.
+          This is really good for better reading the code.
+        dest: /tmp/singleline.log
+        owner: root
+        mode: "0644"

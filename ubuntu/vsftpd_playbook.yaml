@@ -1,0 +1,13 @@
+---
+- name: Install and start vsftpd service
+  hosts: rocky
+  tasks:
+    - name: Install vsftpd
+      ansible.builtin.yum:
+        name: vsftpd
+        state: present
+    - name: Start and enable vsftp service
+      ansible.builtin.service:
+        name: vsftpd
+        state: started
+        enabled: true

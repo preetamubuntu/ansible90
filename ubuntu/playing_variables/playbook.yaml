@@ -1,0 +1,30 @@
+- name: Install and configure httpd
+  hosts: rocky
+  tasks:
+    - name: Install httpd
+      ansible.builtin.yum:
+        name: "{{ package_name }}"
+        state: present
+    - name: Configure httpd service
+      ansible.builtin.service:
+        name: "{{ service_name }}"
+        state: started
+        enabled: true
+    - name: Configure web page
+      ansible.builtin.copy:
+        content: >
+          <h1>This is the best thing
+          in life to happen </h1>
+        dest: "{{ index_file }}"
+        owner: root
+        group: root
+        mode: "0644"
+- name: Check if the web service is available
+  hosts: localhost
+  become: false
+  tasks:
+    - name: Check the url
+      ansible.builtin.uri:
+        url: http://192.168.56.50
+        return_content: true
+        status_code: 200

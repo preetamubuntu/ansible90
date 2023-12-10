@@ -1,0 +1,43 @@
+---
+- name: Install httpd firewall and configure web server
+  hosts: rocky
+  tasks:
+    - name: Install http and firewall
+      ansible.builtin.yum:
+        name:
+          - httpd
+          - firewalld
+        state: present
+    - name: Start and enable httpd service
+      ansible.builtin.service:
+        name: httpd
+        state: started
+        enabled: true
+    - name: Start and enable firewall service
+      ansible.builtin.service:
+        name: firewalld
+        state: started
+        enabled: true
+    - name: Open http port
+      ansible.posix.firewalld:
+        service: http
+        state: enabled
+        permanent: true
+        immediate: true
+    - name: Create a welcome page
+      ansible.builtin.copy:
+        content: >
+          This is the first web page.
+          I'm sure you will like it.
+        dest: /var/www/html/index.html
+        owner: root
+        mode: "0644"
+- name: Check if the web page is reachable
+  hosts: localhost
+  become: false
+  tasks:
+    - name: Check the web page
+      ansible.builtin.uri:
+        url: http://192.168.56.50
+        return_content: true
+        status_code: 200

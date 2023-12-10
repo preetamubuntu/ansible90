@@ -1,0 +1,18 @@
+# play with custom facts
+- name: Create a directory and copy facts file to remote machine
+  hosts: rocky
+  vars:
+    facts_location: "/etc/ansible/facts.d"
+  tasks:
+    - name: Create a Directory
+      ansible.builtin.file:
+        state: directory
+        path: {{ facts_location }}
+        recurse: true
+    - name: Copy a file to destination
+      ansible.builtin.copy:
+        src: custom.fact
+        dest: {{ facts_location }}
+        group: root
+        owner: root
+        mode: "0644"
