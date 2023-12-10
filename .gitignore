@@ -2,4 +2,4 @@
 .vscode/
 *.box
 .pass
-.log
+*.log
