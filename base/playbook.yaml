@@ -1,0 +1,11 @@
+# create a pansible user
+- name: create a pansible user on any machine
+  hosts: webservers
+  become: true
+  
+  tasks:
+    - name: Create a pansible user
+      user:
+        name: pansible
+        group: adm
+        

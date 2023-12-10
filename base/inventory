@@ -1,0 +1,16 @@
+[webservers]
+web01
+web02
+
+[databases]
+db01
+db02
+
+[application]
+app01
+app02
+
+[servers:children]
+webservers
+databases
+application
