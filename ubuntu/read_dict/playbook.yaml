@@ -1,0 +1,10 @@
+---
+- name: Read Dictionary object
+  hosts: rocky
+  vars_files: 
+    - dict.yaml
+  tasks:
+    - name: Print dictionary objects
+      ansible.builtin.debug:
+        msg:
+          - "user {{ users[0]['sucheta']['username'] }}"

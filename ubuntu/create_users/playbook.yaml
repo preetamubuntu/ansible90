@@ -1,0 +1,10 @@
+---
+- name: Create users in bulk
+  hosts: rocky
+  vars_files:
+    - vars_users.yaml
+  tasks:
+    - name: Create users
+      ansible.builtin.user:
+        name: "{{ user_login_name }}"
+        comment: "{{ user_full_name }}"
