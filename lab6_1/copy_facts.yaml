@@ -1,0 +1,21 @@
+---
+- name: Copy the facts files
+  hosts: rocky
+  vars:
+    remote_dest: "/etc/ansible/facts.d"
+  tasks:
+    - name: Create directory
+      ansible.builtin.file:
+        state: directory
+        path: "{{ remote_dest }}"
+        recurse: true
+    - name: Copy files
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: "{{ remote_dest }}"
+        group: root
+        owner: root
+        mode: "0644"
+      loop:
+        - packages.fact
+        - services.fact
