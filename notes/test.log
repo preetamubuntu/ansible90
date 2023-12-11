@@ -1,0 +1,13 @@
+1. d. “{{ user }}”
+2. b. setup
+3. 
+    a. ansible_facts[’default_ipv4’][’address’]
+    b. ansible_facts.default_ipv4.address
+4. b. Custom fact files must be executable.
+5. c. my_file1
+6. d. Define the variables: key in the play header
+and give it a list value.
+7. d. config_file
+8. b. ansible-vault rekey
+9. b. --vault-id @prompt
+10. c. Use the register parameter.
