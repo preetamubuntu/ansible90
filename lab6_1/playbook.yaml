@@ -1,0 +1,40 @@
+---
+- name: Install firewall, mariadb and vsftp
+  hosts: rocky
+  vars_files:
+    - allvars.yaml
+  tasks:
+    - name: Install packages
+      ansible.builtin.yum:
+        name:
+          - "{{ ansible_facts['ansible_local']['packages']['packages']['db_package'] }}"
+          - "{{ ansible_facts['ansible_local']['packages']['packages']['firewall_package'] }}"
+          - "{{ ansible_facts['ansible_local']['packages']['packages']['ftp_package'] }}"
+          - "{{ ansible_facts['ansible_local']['packages']['packages']['smb_package'] }}"
+          - "{{ ansible_facts['ansible_local']['packages']['packages']['web_package'] }}"
+        state: present
+    - name: Configure smb service
+      ansible.builtin.service:
+        name: "{{ ansible_facts['ansible_local']['services']['services']['smb_service'] }}"
+        enabled: true
+        state: started
+    - name: Configure vsftp service
+      ansible.builtin.service:
+        name: "{{ ansible_facts['ansible_local']['services']['services']['ftp_service'] }}"
+        enabled: true
+        state: started
+    - name: Configure mariadb service
+      ansible.builtin.service:
+        name: "{{ ansible_facts['ansible_local']['services']['services']['db_service'] }}"
+        enabled: true
+        state: started
+    - name: Configure firewalld service
+      ansible.builtin.service:
+        name: "{{ ansible_facts['ansible_local']['services']['services']['firewall_service'] }}"
+        enabled: true
+        state: started
+    - name: Configure Httpd service
+      ansible.builtin.service:
+        name: "{{ ansible_facts['ansible_local']['services']['services']['web_service'] }}"
+        enabled: true
+        state: started
