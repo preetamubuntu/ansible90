@@ -1,0 +1,21 @@
+# this simple version of loop.
+---
+- name: Let us play with loop
+  hosts: rocky
+  tasks:
+    - name: Install packages
+      ansible.builtin.yum:
+        name:
+        - vsftpd
+        - httpd
+        - samba
+        state: present
+    - name: Start service using loop
+      ansible.builtin.service:
+        name: "{{ item }}"
+        state: started
+        enabled: true
+      loop:
+        - vsftpd
+        - httpd
+        - samba
