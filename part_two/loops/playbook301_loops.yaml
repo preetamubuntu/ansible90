@@ -6,9 +6,9 @@
   tasks:
     - name: Create users as mentioned in the variable files
       ansible.builtin.user:
-        name: "{{ item }}"
+        name: "{{ item.username }}"
         shell: "{{ item.shell }}"
         groups:
           - "{{ item.groups }}"
-        comment: "{{ fullname }}"
+        comment: "{{ item.fullname }}"
       loop: "{{ users }}"
