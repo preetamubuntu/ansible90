@@ -1,0 +1,18 @@
+---
+users:
+  - username: preetam007
+    shell: /bin/bash
+    groups: adm
+    fullname: "Preetam Zare"
+  - username: shilpa007
+    shell: /bin/bash
+    groups: adm
+    fullname: "Shilpa Zare"
+  - username: arnav007
+    shell: /bin/bash
+    groups: adm
+    fullname: "Arnav Zare"
+  - username: krisha007
+    shell: /bin/bash
+    groups: adm
+    fullname: "Krisha Zare"
