@@ -1,0 +1,14 @@
+---
+- name: Create users in bulk
+  hosts: rocky
+  vars_files:
+    - users_db.yaml
+  tasks:
+    - name: Create users as mentioned in the variable files
+      ansible.builtin.user:
+        name: "{{ item }}"
+        shell: "{{ item.shell }}"
+        groups:
+          - "{{ item.groups }}"
+        comment: "{{ fullname }}"
+      loop: "{{ users }}"
