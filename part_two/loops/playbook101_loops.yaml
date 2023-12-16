@@ -6,9 +6,9 @@
     - name: Install packages
       ansible.builtin.yum:
         name:
-        - vsftpd
-        - httpd
-        - samba
+          - vsftpd
+          - httpd
+          - samba
         state: present
     - name: Start service using loop
       ansible.builtin.service:
@@ -18,4 +18,4 @@
       loop:
         - vsftpd
         - httpd
-        - samba
+        - smb

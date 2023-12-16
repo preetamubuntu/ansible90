@@ -19,4 +19,5 @@ systemctl restart sshd
 exit
 exit
 # Below command should be run from the controller
+ssh-keygen -f ~/.ssh/known_hosts -R 192.168.56.50
 ssh-copy-id -i ~/.ssh/pansible.pub pansible@192.168.56.50
