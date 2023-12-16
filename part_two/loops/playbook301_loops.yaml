@@ -2,7 +2,7 @@
 - name: Create users in bulk
   hosts: rocky
   vars_files:
-    - users_db.yaml
+    - vars/users_db.yaml
   tasks:
     - name: Create users as mentioned in the variable files
       ansible.builtin.user:

@@ -1,0 +1,11 @@
+---
+- name: Uninstall packages from the server
+  hosts: rocky
+  vars_files:
+    - vars/packages.yaml
+  tasks:
+    - name: Uninstall packages
+      ansible.builtin.yum:
+        name: "{{ item.name }}"
+        state: "{{ item.state }}"
+      loop: "{{ packages }}"
