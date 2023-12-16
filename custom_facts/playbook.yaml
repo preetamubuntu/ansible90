@@ -11,3 +11,4 @@
         name: "{{ ansible_facts['ansible_local']['custom']['software']['service'] }}"
         enabled: "{{ ansible_facts['ansible_local']['custom']['software']['enable'] }}"
         state: "{{ ansible_facts['ansible_local']['custom']['software']['state'] }}"
+    

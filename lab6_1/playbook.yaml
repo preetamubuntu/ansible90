@@ -38,3 +38,28 @@
         name: "{{ ansible_facts['ansible_local']['services']['services']['web_service'] }}"
         enabled: true
         state: started
+    - name: Allow Firewall port 80
+      ansible.posix.firewalld:
+        immediate: true
+        permanent: true
+        service: http
+        state: enabled
+    - name: Create a custom welcome page
+      ansible.builtin.copy:
+        content: >
+          <h1> Welcome to the
+          Ansible Web Server
+          </h1>
+        dest: "{{ web_root }}/index.html"
+        group: root
+        owner: root
+        mode: "0644"
+- name: Check web page is available from your workstation
+  hosts: localhost
+  become: false
+  tasks:
+    - name: Check Web Page
+      ansible.builtin.uri:
+        url: http://192.168.56.50
+        return_content: true
+        status_code: 200
