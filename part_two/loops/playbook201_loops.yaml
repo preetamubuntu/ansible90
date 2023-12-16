@@ -6,7 +6,7 @@
     services:
       - vsftpd
       - httpd
-      - samba
+      - smb
   tasks:
     - name: Install packages
       ansible.builtin.yum:
