@@ -1,0 +1,15 @@
+---
+- name: Using prompts in playbook
+  hosts: rocky
+  vars_prompt:
+    - name: package_name
+      prompt: Enter the package name to install
+  vars:
+    packages:
+      - httpd
+      - vsftpd
+  tasks:
+    - name: Check if the package name exists
+      ansible.builtin.debug:
+        msg: "Package name {{ package_name }} is available to install"
+      when: package_name in packages

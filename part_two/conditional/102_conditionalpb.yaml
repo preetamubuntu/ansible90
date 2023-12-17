@@ -1,0 +1,13 @@
+---
+- name: Check if devices are present
+  hosts: rocky
+  tasks:
+    - name: Check if SDA device is present
+      ansible.builtin.debug:
+        msg: SDA device is present
+      when: ansible_facts['devices']['sda'] is defined
+    - name: Check if SDA device is present
+      ansible.builtin.debug:
+        msg: SDB device is NOT present
+      when: ansible_facts['devices']['sdb'] is not defined
+ 
