@@ -1,0 +1,15 @@
+# exercise: 7-2
+---
+- name: Use loop and condition
+  hosts: rocky
+  tasks:
+    - name: Check HTTPD service and restart sshd
+      ansible.builtin.command:
+        cmd: systemctl is-active httpd
+      register: service_status
+      ignore_errors: true
+    - name: Restart SSHD if applicable
+      ansible.builtin.service:
+        name: sshd
+        state: restarted
+      when: service_status.stdout.find != -1

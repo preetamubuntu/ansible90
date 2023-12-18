@@ -1,0 +1,7 @@
+# Print ansible facts
+- name: Print facts
+  hosts: rocky
+  tasks:
+    - name: Gather and print facts
+      ansible.builtin.debug:
+        var: ansible_facts

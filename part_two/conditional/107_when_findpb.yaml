@@ -1,0 +1,20 @@
+---
+- name: Use find with when condition
+  hosts: rocky
+  vars:
+    user_find:
+      - krisha007
+      - preetam007
+      - arnav007
+      - shilpa007
+  tasks:
+    - name: Gather /etc/passwd information
+      ansible.builtin.shell:
+        cmd: cat /etc/passwd
+      register: user_state
+    - name: Find User
+      ansible.builtin.debug:
+        # var: user_state
+        msg: "User {{ user_find }} is present"
+      when: user_state.stdout.find(item) != -1
+      loop: "{{ user_find }}"
