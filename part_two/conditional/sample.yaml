@@ -1,3 +1,5 @@
+# loop the mount points using ansible_facts.
+# remember you need to put quote around ansible_facts
 ---
 - name: Check available memory and do something
   hosts: rocky

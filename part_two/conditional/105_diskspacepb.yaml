@@ -1,0 +1,11 @@
+---
+- name: Check disk space and run the upgrade
+  hosts: rocky
+  tasks:
+    - name: Check diskspace and upgrade kernel
+      ansible.builtin.yum:
+        name: '*'
+        state: latest
+        update_cache: true
+      when: item.mount == "/" and item.size_available > 2000000000
+      loop: "{{ ansible_facts['mounts'] }}"

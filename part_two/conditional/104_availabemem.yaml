@@ -4,6 +4,5 @@
   tasks:
     - name: Check if available memory is above 500 mb
       ansible.builtin.debug:
-        var: ansible_facts['mounts'][0]['size_available']
-#      when: ansible_facts['memory_mb']['real']['free'] >= 300
-      # when: ansible_facts['mounts'][0]['mount']
+        msg: "You can install the package"
+      when: ansible_facts['memory_mb']['real']['free'] >= 300
