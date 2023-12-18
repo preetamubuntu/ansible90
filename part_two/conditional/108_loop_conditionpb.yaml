@@ -8,8 +8,11 @@
         cmd: systemctl is-active httpd
       register: service_status
       ignore_errors: true
-    - name: Restart SSHD if applicable
+    # - ansible.builtin.debug:
+    #     var: service_status.rc
+    - name: Restart SSHD if httpd service is stopped
       ansible.builtin.service:
         name: sshd
         state: restarted
-      when: service_status.stdout.find != -1
+      when: service_status.rc == 0
+      # when: service_status.stdout.find != 3
