@@ -1,0 +1,42 @@
+# This is same playbook as 101 but now with force_handlers
+---
+- name: Customize Index page
+  hosts: localhost
+  become: false
+  tasks:
+    - name: Create a custom Index page
+      ansible.builtin.copy:
+        content: >
+          "<H1> This is 2024 page with
+          90 days ansible </H1>"
+        dest: /tmp/index.html
+        mode: "0644"
+- name: Install HTTPD, Configure service and customize page
+  hosts: rocky
+  force_handlers: true
+  tasks:
+    - name: Install HTTPD Service
+      ansible.builtin.yum:
+        name: httpd
+        state: present
+    - name: Configure HTTPD Service
+      ansible.builtin.service:
+        name: httpd
+        state: started
+        enabled: true
+    - name: Copy custom Index file
+      ansible.builtin.copy:
+        src: /tmp/index.html
+        dest: /var/www/html/index.html
+        mode: "0644"
+      notify: Page_updated
+    - name: Initiate manual failure
+      ansible.builtin.copy:
+        src: /tmp/nothing.html
+        dest: /var/www/html/nothing.html
+        mode: "0644"
+  handlers:
+    - name: Page_updated
+      ansible.builtin.service:
+        name: httpd
+        state: restarted

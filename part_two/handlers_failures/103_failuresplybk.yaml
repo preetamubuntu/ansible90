@@ -1,0 +1,20 @@
+# how to tackle failures. A very simple example.
+# ensure the httpd service is stopped before executing this playbook
+---
+- name: Tackle failure when httpd service is inactive
+  hosts: rocky
+  tasks:
+    - name: Install httpd
+      ansible.builtin.yum:
+        name: httpd
+        state: present
+    - name: Check httpd service is running
+      ansible.builtin.command:
+        cmd: systemctl is-active httpd
+      ignore_errors: true
+      register: service_status
+    - name: Restart sshd service
+      ansible.builtin.service:
+        name: sshd
+        state: restarted
+      when: service_status.rc == 0

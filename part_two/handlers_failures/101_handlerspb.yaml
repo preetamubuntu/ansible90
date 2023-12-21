@@ -1,3 +1,7 @@
+# explains how the handlers work
+# first you create a manual failure, as there no file wiht name nothing.html
+# then you create nothing.html file but handlers will not run because you know
+# that handlers run only once.
 ---
 - name: Create custom Index page
   hosts: localhost
@@ -18,13 +22,13 @@
         src: /tmp/index.html
         dest: /var/www/html/index.html
       notify:
-        - restart_httpd
+        - Restart_httpd
     - name: Create a manual failure
       ansible.builtin.copy:
         src: /tmp/nothing.html
         dest: /var/www/html/nothing.html
   handlers:
-    - name: restart_httpd
+    - name: Restart_httpd
       ansible.builtin.service:
         name: httpd
         state: restarted

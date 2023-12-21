@@ -1,0 +1,18 @@
+# first time trying when_failed, so it is kind of 101
+# logic: command is working but that command return failed message.
+  # ansible side, things are working but result is not good for us.
+  # so we declare this task to be failed using when_failed but now webserver
+  # are using ignore_errors to move to next task
+---
+- name: Using when failed condition
+  hosts: rocky
+  tasks:
+    - name: Send a command
+      ansible.builtin.command:
+        cmd: echo hello world
+      register: CMD_Status
+      failed_when: "'world' in CMD_Status.stdout"
+      ignore_errors: true
+    - name: Next task
+      ansible.builtin.debug:
+        msg: Now next task to run
