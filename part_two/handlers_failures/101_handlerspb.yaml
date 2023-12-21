@@ -1,31 +1,30 @@
 ---
 - name: Create custom Index page
   hosts: localhost
+  become: false
   tasks:
-    - name: create a custom page
+    - name: Create a custom page
       ansible.builtin.copy:
         content: >
           "<h1> This is ansible
-          in Weichnachten 2023"
+          in Weichnachten 2024"
         dest: /tmp/index.html
+        mode: "0644"
 - name: Copy custom page to the webserver
   hosts: rocky
   tasks:
-    - name: Copy index.html file
+    - name: Copy index file
       ansible.builtin.copy:
         src: /tmp/index.html
-        dest: /varr/www/html/index.html
+        dest: /var/www/html/index.html
       notify:
         - restart_httpd
     - name: Create a manual failure
       ansible.builtin.copy:
-        src: /tmp/nothing
-        dest: /varr/www/html/nothing.html
+        src: /tmp/nothing.html
+        dest: /var/www/html/nothing.html
   handlers:
     - name: restart_httpd
       ansible.builtin.service:
         name: httpd
         state: restarted
-        
-
-
