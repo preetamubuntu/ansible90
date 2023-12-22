@@ -1,0 +1,33 @@
+# Simple playbook to show the power of blocks rescue and always
+# to get the right result, you need to use command.
+# with file module, idempotent operation no change is detected
+# operation jumps to always block
+# file is only create when you use touch 'state'
+---
+- name: Using blocks, rescue and always
+  hosts: rocky
+  tasks:
+    - name: This is over task under blocks
+      block:
+        - name: Remove Index html file
+          ansible.builtin.command:
+            cmd: rm /var/www/html/index.html
+        - name: File removed block status
+          ansible.builtin.debug:
+            msg: Block task is finished
+      rescue:
+        - name: Create a file
+          ansible.builtin.file:
+            path: /tmp/preetam.txt
+            state: touch
+            mode: "0644"
+        - name: Print the Rescue block status
+          ansible.builtin.debug:
+            msg: Rescue block is executed
+      always:
+        - name: Create a always file
+          ansible.builtin.command:
+            cmd: logger hello
+        - name: Print always status
+          ansible.builtin.debug:
+            msg: Always task is executed now

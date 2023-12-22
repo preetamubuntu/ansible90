@@ -1,0 +1,19 @@
+# This is just a simple example on how to use block
+# But simple concept, anything under block is executed,
+# when statement is true
+---
+- name: Use block to install and configure httpd
+  hosts: rocky
+  tasks:
+    - name: Setting up httpd
+      when: ansible_facts['os_family'] == 'RedHat'
+      block:
+        - name: Install httpd
+          ansible.builtin.yum:
+            name: httpd
+            state: present
+        - name: Configure httpd service
+          ansible.builtin.service:
+            name: httpd
+            enabled: true
+            state: started

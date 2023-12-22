@@ -10,7 +10,7 @@
         state: present
     - name: Check httpd service is running
       ansible.builtin.command:
-        cmd: systemctl is-active httpd
+        cmd: systemctl is-active httpd # rc works only with system commands
       ignore_errors: true
       register: service_status
     - name: Restart sshd service

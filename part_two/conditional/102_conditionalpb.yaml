@@ -10,4 +10,3 @@
       ansible.builtin.debug:
         msg: SDB device is NOT present
       when: ansible_facts['devices']['sdb'] is not defined
- 

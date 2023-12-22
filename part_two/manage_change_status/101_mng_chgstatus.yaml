@@ -1,0 +1,14 @@
+# simple play to demo some command change nothing,
+# the report status as changed.
+---
+- name: Check the date on a system
+  hosts: rocky
+  tasks:
+    - name: Check the date using command module
+      ansible.builtin.command:
+        cmd: date
+      register: date_status
+      changed_when: false
+    - name: Print date
+      ansible.builtin.debug:
+        var: date_status.stdout

@@ -1,0 +1,71 @@
+# playbook based on lab71 scenario
+---
+- name: Create a index html file on controller host
+  hosts: localhost
+  become: false
+  tasks:
+    - name: Create a custom index file
+      ansible.builtin.copy:
+        content: >
+          <h1> Welcome to your webserver </h1>
+        dest: /tmp/index.html
+        mode: "0644"
+- name: Install and Configure webservices
+  hosts: rocky
+  vars_files:
+    - vars/packages.yaml
+  tasks:
+    - name: Install ssl_mod and httpd
+      ansible.builtin.yum:
+        name: "{{ item.pkg_name }}"
+        state: "{{ item.pkg_state }}"
+      loop: "{{ packages_list }}"
+      when: >
+        ( ansible_distribution == "Rocky"
+        and ansible_distribution != "Fedora"
+        and ansible_distribution_version >= "8" ) or
+        ( ansible_distribution == "CentOS"
+        and ansible_distribution != "Fedora"
+        and ansible_distribution_version >= "8" )
+      register: reason_failure
+    - name: Create custom index page
+      ansible.builtin.copy:
+        src: /tmp/index.html
+        dest: /var/www/html/index.html
+        mode: "0644"
+      notify: Indexfile_updated
+    - name: Print the error message
+      ansible.builtin.fail:
+        msg: "Host {{ ansible_hostname }} does not meet minimal requirements"
+      when: "'All items skipped' in reason_failure.msg"
+    - name: Ensure Firewalld is installed
+      ansible.builtin.yum:
+        name: firewalld
+        state: present
+    - name: Ensure Firewalld service is running and enabled
+      ansible.builtin.service:
+        name: firewalld
+        state: started
+        enabled: true
+    - name: Allow http and https service
+      ansible.posix.firewalld:
+        service: "{{ item }}"
+        permanent: true
+        state: enabled
+        immediate: true
+      loop:
+        - http
+        - https
+  handlers:
+    - name: Indexfile_updated
+      ansible.builtin.service:
+        name: httpd
+        state: restarted
+
+# Install the packages only if the current operating
+# system is CentOS or RedHat (but not Fedora)
+# version 8.0 or later. If that is not the case, the
+# playbook should fail with the error message “Host
+# hostname does not meet minimal requirements,”
+# where hostname is replaced with the current host
+# name.

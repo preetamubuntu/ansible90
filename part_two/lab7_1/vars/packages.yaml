@@ -1,0 +1,6 @@
+---
+packages_list:
+  - pkg_name: httpd
+    pkg_state: present
+  - pkg_name: mod_ssl
+    pkg_state: present

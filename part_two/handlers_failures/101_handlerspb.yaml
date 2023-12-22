@@ -1,17 +1,17 @@
 # explains how the handlers work
-# first you create a manual failure, as there no file wiht name nothing.html
+# first you create a manual failure, as there no file with name nothing.html
 # then you create nothing.html file but handlers will not run because you know
 # that handlers run only once.
 ---
 - name: Create custom Index page
   hosts: localhost
-  become: false
+  become: false # keep this false to allow current user to create file
   tasks:
     - name: Create a custom page
       ansible.builtin.copy:
         content: >
           "<h1> This is ansible
-          in Weichnachten 2024"
+          in Weichnachten 2024 </h1>"
         dest: /tmp/index.html
         mode: "0644"
 - name: Copy custom page to the webserver
@@ -21,12 +21,14 @@
       ansible.builtin.copy:
         src: /tmp/index.html
         dest: /var/www/html/index.html
+        mode: "0644"
       notify:
         - Restart_httpd
     - name: Create a manual failure
       ansible.builtin.copy:
         src: /tmp/nothing.html
         dest: /var/www/html/nothing.html
+        mode: "0644"
   handlers:
     - name: Restart_httpd
       ansible.builtin.service:
