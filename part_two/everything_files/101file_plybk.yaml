@@ -1,0 +1,33 @@
+# file module 101 to create a directory and file
+---
+- name: Create a directory and files within it
+  hosts: rocky
+  vars:
+    dir_path: "/preetam_dir"
+    files:
+      - shilpa
+      - arnav
+      - krisha
+    group: preetam007
+    owner: preetam007
+    permissions: "0644"
+  tasks:
+    - name: Create a directory
+      ansible.builtin.file:
+        name: "{{ dir_path }}"
+        group: "{{ group }}"
+        owner: "{{ owner }}"
+        mode: "0770"
+        state: directory
+    - name: Create a file inside this directory
+      ansible.builtin.file:
+        name: "{{ dir_path }}/{{ item }}"
+        state: touch
+        mode: "{{ permissions }}"
+        group: "{{ group }}"
+        owner: "{{ owner }}"
+      loop: "{{ files }}"
+      register: file_creation_info
+    - name: Print Files created
+      ansible.builtin.debug:
+        var: file_creation_info

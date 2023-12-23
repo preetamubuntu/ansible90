@@ -1,0 +1,14 @@
+# simple playbook to get the stats of a file
+---
+- name: Get stats of a file
+  hosts: rocky
+  vars:
+    fl_pth: "/etc/hosts"
+  tasks:
+    - name: Check the file stats
+      ansible.builtin.stat:
+        path: "{{ fl_pth }}"
+      register: fl_stats
+    - name: Print file status for "{{ ffl_pth }}"
+      ansible.builtin.debug:
+        var: fl_stats

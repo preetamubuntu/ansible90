@@ -1,0 +1,24 @@
+# blockinfile but with block replacement.
+# notice that in the updated file it add text as shown below
+- name: Replace a block in a file
+  hosts: rocky
+  vars:
+    fl_path: "/tmp/preetamhosts"
+  tasks:
+    - name: Create a file
+      ansible.builtin.file:
+        path: "{{ fl_path }}"
+        mode: "0644"
+        state: touch
+    - name: Populate preetamhosts file
+      ansible.builtin.blockinfile:
+        path: "{{ fl_path }}"
+        block: |
+          rockys01 192.168.56.60
+          rockys02 192.168.56.61
+        state: present
+
+# # BEGIN ANSIBLE MANAGED BLOCK
+# rockys01 192.168.56.60
+# rockys02 192.168.56.61
+# # END ANSIBLE MANAGED BLOCK

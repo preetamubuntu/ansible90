@@ -1,0 +1,16 @@
+# This is same as 101stats_plybk but with when and fail condition
+---
+- name: Check the file mode
+  hosts: rocky
+  vars:
+    fl_path: "/etc/hosts"
+    fl_perm: "0600"
+  tasks:
+    - name: Get the file mode for "{{ fl_pth }}"
+      ansible.builtin.stat:
+        path: "{{ fl_path }}"
+      register: fl_stats
+    - name: Check the file mode is 0644
+      ansible.builtin.fail:
+        msg: "{{ fl_path }} do not have {{ fl_perm }} permission"
+      when: fl_stats.stat.mode != fl_perm

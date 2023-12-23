@@ -1,0 +1,28 @@
+# This playbook is about copying files and fetching files
+- name: Copy file, edit and fetch it back
+  hosts: rockyfleet
+  tasks:
+    - name: Copy file
+      ansible.builtin.copy:
+        src: /etc/hosts
+        dest: /tmp/
+        mode: "0644"
+    - name: Edit the file on the server
+      ansible.builtin.blockinfile:
+        path: /tmp/hosts
+        block: |
+          192.168.56.60 rockylinux91
+          192.168.56.61 rockylinux92
+        state: present
+    - name: Checksum the file
+      ansible.builtin.stat:
+        path: /tmp/hosts
+        checksum_algorithm: sha512
+      register: result
+    - name: Print the checksum for later comparison
+      ansible.builtin.debug:
+        msg: "The checksum for the file is {{ result['stat']['checksum'] }}"
+    - name: Ensure file is fetched back into tmp directory
+      ansible.builtin.fetch:
+        dest: /tmp/
+        src: /tmp/hosts

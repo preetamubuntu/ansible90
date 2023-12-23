@@ -1,0 +1,26 @@
+# This playbook is same as 102 but now instead of stat, file module is used
+# note: stat module is reading stats.
+# Note: If you run the playbook with -C (--Check), file is not created
+# hence everything after that task cannot be validated
+# lesson learnt :) Date: 23.12.2023
+---
+- name: Fix the permission of a file
+  hosts: rocky
+  vars:
+    fl_path: "/tmp/preetamper.log"
+    fl_perm: "0644"
+  tasks:
+    - name: Create a file"
+      ansible.builtin.file:
+        path: "{{ fl_path }}"
+        mode: "0777"
+        state: touch
+    - name: Check the file stat for "{{ fp_path }}"
+      ansible.builtin.stat:
+        path: "{{ fl_path }}"
+      register: fl_stats
+    - name: Correct the permission for "{{ fl_path }}"
+      ansible.builtin.file:
+        path: "{{ fl_path }}"
+        mode: "{{ fl_perm }}"
+      when: fl_stats.stat.mode != fl_perm

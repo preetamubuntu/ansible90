@@ -1,0 +1,16 @@
+# date: 23-12-2023
+# Playing with file module
+- name: Disable Root access via SSH
+  hosts: rocky
+  tasks:
+    - name: Deny root access via SSH
+      ansible.builtin.lineinfile:
+        path: "/etc/ssh/sshd_config" # dest, name, destfile
+        line: "PermitRootLogin no"
+        regex: "^PermitRootLogin"
+      notify: Config_Updated
+  handlers:
+    - name: Config_Updated
+      ansible.builtin.service:
+        name: sshd
+        state: restarted
