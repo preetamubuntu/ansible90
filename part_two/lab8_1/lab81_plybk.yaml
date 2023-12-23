@@ -1,0 +1,25 @@
+# create playbook based on exercise in lab81
+- name: Playing with files
+  hosts: rockyfleet
+  vars:
+    fl_path: "/tmp/nothing.log"
+    fl_perm: "0644"
+    group: "adm"
+  tasks:
+    - name: Create empty file
+      ansible.builtin.file:
+        path: "{{ fl_path }}"
+        mode: "{{ fl_perm }}"
+        state: touch
+    - name: Check the file information
+      ansible.builtin.stat:
+        path: "{{ fl_path }}"
+      register: fileinfo
+    - name: Print the file info
+      ansible.builtin.debug:
+        var: fileinfo
+    - name: Ensure the file owner is "{{ group }}"
+      ansible.builtin.file:
+        path: "{{ fl_path }}"
+        group: "{{ group }}"
+      when: fileinfo.stat.pw_name != group
