@@ -1,5 +1,6 @@
 # simple play to demo some command change nothing,
 # the report status as changed.
+# Date: 22-12-2023
 ---
 - name: Check the date on a system
   hosts: rocky

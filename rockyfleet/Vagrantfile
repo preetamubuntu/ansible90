@@ -1,0 +1,26 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+Vagrant.configure("2") do |config|
+  config.vm.box = "rockylinux/9"
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = 2048
+    vb.linked_clone = true
+  end
+  # app01
+  config.vm.define "rockys01" do |app01|
+    app01.vm.hostname = "rockys01"
+    app01.vm.network :private_network, ip: "192.168.56.60", hostname: true
+  end
+  # app02
+  config.vm.define "rockys02" do |app02|
+    app02.vm.hostname = "rockys02"
+    app02.vm.network :private_network, ip: "192.168.56.61", hostname: true
+  end
+  config.vm.box_check_update = false
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+end

@@ -1,4 +1,5 @@
 # playbook based on lab71 scenario
+# Date: 22-12-2023
 ---
 - name: Create a index html file on controller host
   hosts: localhost
@@ -62,10 +63,3 @@
         name: httpd
         state: restarted
 
-# Install the packages only if the current operating
-# system is CentOS or RedHat (but not Fedora)
-# version 8.0 or later. If that is not the case, the
-# playbook should fail with the error message “Host
-# hostname does not meet minimal requirements,”
-# where hostname is replaced with the current host
-# name.
