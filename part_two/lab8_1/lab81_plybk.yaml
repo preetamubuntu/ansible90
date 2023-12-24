@@ -23,3 +23,35 @@
         path: "{{ fl_path }}"
         group: "{{ group }}"
       when: fileinfo.stat.pw_name != group
+- name: Fetch file from from one host
+  hosts: rockys01
+  vars:
+    motd_src: /etc/motd
+    motd_dest: /home/preetam/Documents/file_fetched
+  tasks:
+    - name: Fetch motd file "{{ ansible_hostname }}"
+      ansible.builtin.fetch:
+        src: "{{ motd_src }}"
+        dest: "{{ motd_dest }}"
+- name: Edit message motd on controller host
+  hosts: localhost
+  become: false
+  vars:
+    motd_dest: /home/preetam/Documents/file_fetched
+  tasks:
+    - name: Fetch motd file from "{{ ansible_nodename }}"
+      ansible.builtin.blockinfile:
+        path: "{{ motd_dest }}/rockys01/etc/motd"
+        block: |
+          Welcome Rockstar !!! to Rocky Linux 9
+- name: Copy motd on all hosts
+  hosts: rockyfleet
+  vars:
+    motd_src: /etc/motd
+    motd_dest: /home/preetam/Documents/file_fetched
+  tasks:
+    - name: Copy motd
+      ansible.builtin.copy:
+        src: "{{ motd_dest }}/rockys01/etc/motd"
+        dest: "{{ motd_src }}"
+        mode: "0644"
