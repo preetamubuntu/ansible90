@@ -19,9 +19,9 @@ export userpass='lcG]cVVu9!a0NKPp1V'
 useradd -m -c "Ansible User" -g adm -s /bin/bash $username
 echo $username:$userpass | chpasswd
 echo "$username ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/$username
-# # this is not required ---- > sed -i 's/PasswordAuthentication/#PasswordAuthentication/' /etc/ssh/sshd_config
+# this is required only for Ubuntu vagrant images ---- > sed -i 's/PasswordAuthentication/#PasswordAuthentication/' /etc/ssh/sshd_config && grep ^#PasswordAuthentication /etc/ssh/sshd_config
 systemctl restart sshd
-history -c
+history -c && history -w
 exit
 exit
 # run this command from Ubuntu desktop/controller host

@@ -1,5 +1,5 @@
 #!/bin/bash
-ssh-keygen -t ed25519 -C "Preetam"
+ssh-keygen -t ed25519 -C "Sugrible"
 ssh-copy-id -i ~/.ssh/id_ed25519.pub 192.168.50.115
 ssh-copy-id -i ~/.ssh/id_ed25519.pub 192.168.50.129
 eval $(ssh-agent)
