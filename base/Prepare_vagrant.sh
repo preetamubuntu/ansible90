@@ -14,7 +14,7 @@
     # sudo su
 # run the following commands
 # Step:03
-export username='pansible'
+export username='sugrible'
 export userpass='lcG]cVVu9!a0NKPp1V'
 useradd -m -c "Ansible User" -g adm -s /bin/bash $username
 echo $username:$userpass | chpasswd
@@ -26,9 +26,9 @@ exit
 exit
 # run this command from Ubuntu desktop/controller host
 # step:04
-export ANSIBLEUSERNAME=pansible
-export HOSTIP=192.168.56.61
-ssh-copy-id -i ~/.ssh/pansible.pub $ANSIBLEUSERNAME@$HOSTIP
+export ANSIBLEUSERNAME='sugrible'
+export HOSTIP=192.168.56.50
+ssh-copy-id -i ~/.ssh/sugrible.pub $ANSIBLEUSERNAME@$HOSTIP
 
 # [ Optional ] Below command should be run from the controller only if you are recreating environment
 ssh-keygen -f ~/.ssh/known_hosts -R $HOSTIP
