@@ -1,10 +1,10 @@
-a. Disable X11 forwarding
-c. AllowUsers bob lisa
-d. semanage port -a -t ssh_port_t -p tcp 2022
-b. This option specifies the maximum number of login attempts. After reaching half the number specified here, additional failures are logged.
-a. /var/log/auth
-b. GSSAPIAuthentication and c. UseDNS
-d. UseDNS
-b. ~/.ssh/config
-c. Run ssh-agent /bin/bash followed by ssh-add.
-a. 10
+a. yum install httpd
+a. /etc/httpd/conf/httpd.conf
+c. DocumentRoot
+a. ServerRoot
+b. /etc/httpd/conf
+d. /etc/httpd/conf.modules.d
+
+a. Name-based
+a. <VirtualHost *:80>
+c. To use virtual hosts, the mod_virt package must be installed.
