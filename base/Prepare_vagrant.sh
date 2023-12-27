@@ -14,20 +14,19 @@
     # sudo su
 # run the following commands
 # Step:03
-export username='sugrible'
+export username='sugrible1'
 export userpass='lcG]cVVu9!a0NKPp1V'
 useradd -m -c "Ansible User" -g adm -s /bin/bash $username
 echo $username:$userpass | chpasswd
 echo "$username ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/$username
 # this is required only for Ubuntu vagrant images ---- > sed -i 's/PasswordAuthentication/#PasswordAuthentication/' /etc/ssh/sshd_config && grep ^#PasswordAuthentication /etc/ssh/sshd_config
 systemctl restart sshd
-history -c && history -w
-exit
+history -c && history -w && exit
 exit
 # run this command from Ubuntu desktop/controller host
 # step:04
-export ANSIBLEUSERNAME='sugrible'
-export HOSTIP=192.168.56.50
+export ANSIBLEUSERNAME='sugrible1'
+export HOSTIP=192.168.56.51
 ssh-copy-id -i ~/.ssh/sugrible.pub $ANSIBLEUSERNAME@$HOSTIP
 
 # [ Optional ] Below command should be run from the controller only if you are recreating environment

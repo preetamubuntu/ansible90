@@ -1,0 +1,67 @@
+# configure httpd with selinux
+---
+- name: Configure SE Linux on httpd
+  hosts: rocky
+  tasks:
+    - name: Enable SELinux
+      ansible.posix.selinux:
+        policy: targeted
+        state: enforcing
+    - name: Install Policycoreutils HTTPD and Firewalld
+      ansible.builtin.dnf:
+        name:
+          - httpd
+          - firewalld
+          - policycoreutils-python-utils
+        state: present
+    - name: Configure HTTPD and Firewall Service
+      ansible.builtin.service:
+        name: "{{ item }}"
+        state: started
+        enabled: true
+      loop:
+        - httpd
+        - firewalld
+    - name: Allow HTTPD on Firewall
+      ansible.posix.firewalld:
+        service: http
+        immediate: true
+        permanent: true
+        state: enabled
+    - name: Create /web Directory
+      ansible.builtin.file:
+        path: /preetamweb
+        state: directory
+        mode: "0644"
+    - name: Create a custom Index page inside /web
+      ansible.builtin.copy:
+        content: >
+          <H1> This is best web server in 2024 </H1>
+        dest: /preetamweb/index.html
+        mode: "0644"
+    - name: Change document root using lineinfile
+      ansible.builtin.lineinfile:
+        path: /etc/httpd/conf/httpd.conf
+        regexp: ^DocumentRoot
+        line: DocumentRoot "/preetamweb"
+        mode: "0644"
+    - name: Update the Document Directory
+      ansible.builtin.lineinfile:
+        path: /etc/httpd/conf/httpd.conf
+        regexp: '^<Directory "/var/www">'
+        line: '<Directory "/preetamweb">'
+    - name: Change SELinux context on web directory
+      community.general.sefcontext:
+        target: '/preetamweb(/.*)?'
+        setype: httpd_sys_content_t
+        state: present
+      notify: Run restorecon
+    - name: Allow web server to run user context
+      ansible.posix.seboolean:
+        name: httpd_read_user_content
+        state: true
+        persistent: true
+  handlers:
+    - name: Run restorecon
+      ansible.builtin.command:
+        cmd: restorecon -irv /preetamweb

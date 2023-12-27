@@ -1,0 +1,32 @@
+# Simple playbook to start with selinux, fulling pre-requisites
+---
+- name: Initial configuration of SELinux
+  hosts: rocky
+  vars:
+    cust_www_dir: /wwwtmp
+    cust_www_file: sample.html
+  tasks:
+    - name: Install coreutils software for semanage
+      ansible.builtin.dnf:
+        name: policycoreutils-python-utils
+        state: present
+    - name: Create sample directory
+      ansible.builtin.file:
+        path: "{{ cust_www_dir }}"
+        state: directory
+        mode: "0644"
+    - name: Create sample file inside a directory
+      ansible.builtin.file:
+        path: "{{ cust_www_dir }}/{{ cust_www_file }}"
+        state: touch
+        mode: "0644"
+    - name: Set the context on sample file
+      community.general.sefcontext:
+        target: "{{ cust_www_dir }}/"
+        setype: httpd_sys_content_t
+        state: present
+      notify: Run restorecon
+  handlers:
+    - name: Run restorecon
+      ansible.builtin.command:
+        cmd: restorecon -Rv "{{ cust_www_dir }}/"
