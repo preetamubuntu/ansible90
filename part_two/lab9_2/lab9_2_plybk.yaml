@@ -1,0 +1,61 @@
+---
+- name: Install and configure vsftpd
+  hosts: rocky
+  vars:
+    Anonymous_enable: "YES"
+    Local_enable: "YES"
+    Write_enable: "YES"
+    Anon_upload_enable: "YES"
+  tasks:
+    - name: Install all required packages
+      ansible.builtin.dnf:
+        name:
+          - vsftpd
+          - firewalld
+          - policycoreutils-python-utils
+        state: present
+    - name: Configure service
+      ansible.builtin.service:
+        name: "{{ item }}"
+        state: started
+        enabled: true
+      loop:
+        - vsftpd
+        - firewalld
+    - name: Configure vsftpd on firewall
+      ansible.posix.firewalld:
+        port: 20-21/tcp
+        immediate: true
+        permanent: true
+        state: enabled
+    - name: Customized FTP Settings
+      ansible.builtin.template:
+        src: templates/vsftpd.j2
+        dest: /etc/vsftpd/vsftpd.conf
+        backup: true
+        mode: "0644"
+      notify: Restart vsftpd
+    - name: Set permissions on the pub directory
+      ansible.builtin.file:
+        path: /var/ftp/pub
+        state: directory
+        mode: "0777"
+    - name: Configure SELinux context on pub directory
+      community.general.sefcontext:
+        setype: public_content_rw_t
+        target: '/var/ftp/pub(/.*)?'
+        state: present
+      notify: Run Restorecon
+    - name: Allow anonymous user writes
+      ansible.posix.seboolean:
+        name: ftpd_anon_write
+        state: true
+        persistent: true
+  handlers:
+    - name: Restart vsftpd
+      ansible.builtin.service:
+        name: vsftpd
+        state: restarted
+    - name: Run Restorecon
+      ansible.builtin.command:
+        cmd: restorecon -rv /var/ftp/pub

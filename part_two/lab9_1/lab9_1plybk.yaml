@@ -1,0 +1,24 @@
+# Write a playbook that generates an /etc/hosts file on all
+# managed hosts.
+# Apply the following requirements:
+#   All hosts that are defined in inventory should be
+#   added to the /etc/hosts file
+
+---
+- name: Get all hosts from an inventory file
+  hosts: localhost
+  become: false
+  tasks:
+    - name: Write to tmp folder a file with all hosts in inventory
+      ansible.builtin.template:
+        src: templates/gatherhost.j2
+        dest: /tmp/host_inv.log
+        mode: "0644"
+- name: Copy host inventory to the all hosts in inventory file
+  hosts: all
+  tasks:
+    - name: Ensure hosts file has all info from inventory
+      ansible.builtin.copy:
+        src: /tmp/host_inv.log
+        dest: /tmp/hosts.log
+        mode: "0644"

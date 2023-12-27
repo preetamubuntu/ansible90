@@ -1,0 +1,9 @@
+# Write simple play to fetch vsftp file
+---
+- name: Fetch vsftp conf file
+  hosts: rocky
+  tasks:
+    - name: Fetch vsftp config file
+      ansible.builtin.fetch:
+        src: /etc/vsftpd/vsftpd.conf
+        dest: /home/preetam/Documents/ansible_Labs/part_two/lab9_2/templates/vsftpd_conf.j2
