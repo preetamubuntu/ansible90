@@ -1,0 +1,22 @@
+# create a virtual hosts on apache/httpd
+- name: Create virtual hosts in httpd
+  hosts: rocky
+  tasks:
+    - name: Install HTTPD
+      ansible.builtin.dnf:
+        name: httpd
+        state: present
+    - name: Configure and state httpd service
+      ansible.builtin.service:
+        name: httpd
+        state: started
+        enabled: true
+    - name: Create Virtual host file
+      ansible.builtin.template:
+        src: templates/virtualhosts.j2
+        dest: /etc/httpd/conf.d/{{ ansible_facts['fqdn'] }}.conf
+        mode: "0644"
+    - name: Restart httpd service
+      ansible.builtin.service:
+        name: httpd
+        state: restarted

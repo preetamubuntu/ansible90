@@ -1,0 +1,12 @@
+# simple playbook to use Jinja template which has if
+---
+- name: Jinja template with if
+  hosts: rocky 
+  vars:
+    package_name: httpd
+  tasks:
+    - name: Write to tmp file the results
+      ansible.builtin.template:
+        src: templates/simpleif.j2
+        dest: /tmp/packagenames.log
+        mode: "0644"

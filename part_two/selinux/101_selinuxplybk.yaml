@@ -1,4 +1,4 @@
-# Simple playbook to start with selinux, fulling pre-requisites
+# Simple playbook to start with selinux, ful filling pre-requisites
 ---
 - name: Initial configuration of SELinux
   hosts: rocky

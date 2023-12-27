@@ -1,0 +1,10 @@
+# create playbook with Jinja and loop
+---
+- name: Create a simple file using Jinja loop
+  hosts: rocky
+  tasks:
+    - name: Create a file in tmp directory
+      ansible.builtin.template:
+        src: templates/simplefor.j2
+        dest: /tmp/hosts.log
+        mode: "0644"

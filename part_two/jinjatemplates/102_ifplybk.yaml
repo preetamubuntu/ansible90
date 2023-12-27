@@ -1,0 +1,10 @@
+# Using ansible facts to write to the write hosts
+---
+- name: Test
+  hosts: rocky ubuntus
+  tasks:
+    - name: Testing
+      ansible.builtin.template:
+        src: templates/102_if.j2
+        dest: /tmp/serverfamily.log
+        mode: "0644"
