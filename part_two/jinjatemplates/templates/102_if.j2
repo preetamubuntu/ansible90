@@ -1,5 +1,5 @@
 {% if ansible_facts['os_family'] == 'RedHat'%}
-Welcome to Rocky
-{% else %}
-Welcome to Ubuntu
+Welcome to Rocky's star OS
+{% elif ansible_facts['os_family'] == 'Debian' %}
+Welcome to Ubuntu, the old is wise
 {% endif %}

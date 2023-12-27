@@ -1,54 +1,10 @@
-debug1: SSH2_MSG_EXT_INFO received
-debug1: kex_input_ext_info: server-sig-algs=<ssh-ed25519,sk-ssh-ed25519@openssh.com,ssh-rsa,rsa-sha2-256,rsa-sha2-512,ssh-dss,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,sk-ecdsa-sha2-nistp256@openssh.com,webauthn-sk-ecdsa-sha2-nistp256@openssh.com>
-debug1: SSH2_MSG_SERVICE_ACCEPT received
-debug1: Authentications that can continue: publickey,gssapi-keyex,gssapi-with-mic,password
-debug1: Next authentication method: gssapi-with-mic
-debug1: No credentials were supplied, or the credentials were unavailable or inaccessible
-No Kerberos credentials available (default cache: FILE:/tmp/krb5cc_1000)
+a. stat
+c. lineinfile
+c. st.stat.mode != ’0640’
+d. regexp: “^PermitRootLogin”
+b. Copy a line of text into a file
+d. fetch
+c. command
+a. Use the command module to run the restorecon command.
 
-
-debug1: No credentials were supplied, or the credentials were unavailable or inaccessible
-No Kerberos credentials available (default cache: FILE:/tmp/krb5cc_1000)
-
-
-debug1: Next authentication method: publickey
-debug1: Trying private key: /home/mysecretuser/.ssh/id_rsa
-debug1: Trying private key: /home/mysecretuser/.ssh/id_ecdsa
-debug1: Trying private key: /home/mysecretuser/.ssh/id_ecdsa_sk
-debug1: Offering public key: /home/mysecretuser/.ssh/id_ed25519 ED25519 SHA256:iKAf1azWYFFx4JlkoRiqv11Ucq7Gg91xXr/EsVXeCaY
-debug1: Authentications that can continue: publickey,gssapi-keyex,gssapi-with-mic,password
-debug1: Trying private key: /home/mysecretuser/.ssh/id_ed25519_sk
-debug1: Trying private key: /home/mysecretuser/.ssh/id_xmss
-debug1: Trying private key: /home/mysecretuser/.ssh/id_dsa
-debug1: Next authentication method: password
----------------------
-
-debug1: Offering public key: Pansible User ED25519 SHA256:kiivGrc2rbzesAuSvrlXSnJnnQ0KbNxf9ZvxAONKxQE agent
-debug1: Server accepts key: Pansible User ED25519 SHA256:kiivGrc2rbzesAuSvrlXSnJnnQ0KbNxf9ZvxAONKxQE agent
-Authenticated to 192.168.56.50 ([192.168.56.50]:22) using "publickey".
-debug1: channel 0: new [client-session]
-debug1: Requesting no-more-sessions@openssh.com
-debug1: Entering interactive session.
-debug1: pledge: filesystem
-debug1: client_input_global_request: rtype hostkeys-00@openssh.com want_reply 0
-debug1: client_input_hostkeys: searching /home/mysecretuser/.ssh/known_hosts for 192.168.56.50 / (none)
-debug1: client_input_hostkeys: searching /home/mysecretuser/.ssh/known_hosts2 for 192.168.56.50 / (none)
-debug1: client_input_hostkeys: hostkeys file /home/mysecretuser/.ssh/known_hosts2 does not exist
-debug1: client_input_hostkeys: no new or deprecated keys from server
-debug1: Remote: /home/pansible/.ssh/authorized_keys:1: key options: agent-forwarding port-forwarding pty user-rc x11-forwarding
-debug1: Remote: /home/pansible/.ssh/authorized_keys:1: key options: agent-forwarding port-forwarding pty user-rc x11-forwarding
-
-total 56
--rw------- 1 secretuser secretuser  419 Oct 21 13:02 ansible
--rw-r--r-- 1 secretuser secretuser  104 Oct 21 13:02 ansible.pub
--rw------- 1 secretuser secretuser    0 Oct 20 20:00 authorized_keys
--rw------- 1 secretuser secretuser  464 Dec 10 20:59 id_ed25519
--r-------- 1 secretuser secretuser  464 Oct 21 10:42 id_ed25519.old
--rw-r--r-- 1 secretuser secretuser  103 Dec 10 20:59 id_ed25519.pub
--rw-rw-r-- 1 secretuser secretuser   96 Oct 21 12:58 id_ed25519.pub.old
--rw------- 1 secretuser secretuser 6016 Dec 26 13:22 known_hosts
--rw------- 1 secretuser secretuser 5180 Dec 26 13:22 known_hosts.old
--rw------- 1 secretuser secretuser  399 Dec  1 15:27 pansible
--rw------- 1 secretuser secretuser   95 Dec  1 15:27 pansible.pub
--rw------- 1 secretuser secretuser  411 Dec 26 13:24 sugrible
--rw------- 1 secretuser secretuser  102 Dec 26 13:24 sugrible.pub
+b. The hostvars magic variable

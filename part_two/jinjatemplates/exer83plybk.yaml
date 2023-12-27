@@ -1,0 +1,10 @@
+# create hostname, fqdn and ip address entry in tmp file
+---
+- name: Create FQDN, IP Entry in tmp file
+  hosts: rockyfleet
+  tasks:
+    - name: Create a entry
+      ansible.builtin.template:
+        src: templates/labjinjatemp.j2
+        dest: /tmp/info.log
+        mode: "0644"
