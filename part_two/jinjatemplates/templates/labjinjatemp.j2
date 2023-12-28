@@ -1,4 +1,4 @@
-# Template which will create hostname, fqdn and ip address
+{ # Template which will create hostname, fqdn and ip address # }
 {% for node in groups['rockyfleet'] %}
 {{ hostvars[node]['ansible_default_ipv4']['address'] }} {{ hostvars[node]['ansible_fqdn'] }}
 {% endfor %}

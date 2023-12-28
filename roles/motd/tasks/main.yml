@@ -1,0 +1,9 @@
+# tasks file for motd
+---
+- name: Create a motd
+  ansible.builtin.template:
+    src: templates/motd.j2
+    dest: /etc/motd
+    mode: "0444"
+    group: root
+    owner: root

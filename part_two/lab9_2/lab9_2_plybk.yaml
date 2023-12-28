@@ -1,3 +1,10 @@
+# this is big playbook as per lab: 9-2
+# Still some work needs to be done
+#   esp around
+#   handlers and restart of vsftpd
+#   use variables everywhere
+#   create a dedicated user for vsftpd
+#   reference: https://www.linuxteck.com/how-to-set-up-ftp-server-in-rocky-linux/
 ---
 - name: Install and configure vsftpd
   hosts: rocky

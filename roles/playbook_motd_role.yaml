@@ -1,0 +1,7 @@
+# playbook which use motd role defined under motd directory
+---
+- name: Create a motd
+  hosts: rocky
+  roles:
+    - role: motd
+      system_manager: radhey@galaxy.all # this variable is defined in defaults and hence can be overridden
