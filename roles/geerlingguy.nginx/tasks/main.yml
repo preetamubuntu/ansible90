@@ -9,13 +9,15 @@
   when: nginx_user is not defined
 
 # Setup/install tasks.
-- include_tasks: setup-RedHat.yml
+- name: For Redhat family
+  include_tasks: setup-RedHat.yml
   when: ansible_os_family == 'RedHat'
 
 - include_tasks: setup-Ubuntu.yml
   when: ansible_distribution == 'Ubuntu'
 
-- include_tasks: setup-Debian.yml
+- name: For Debian family
+  include_tasks: setup-Debian.yml
   when: ansible_os_family == 'Debian'
 
 - include_tasks: setup-FreeBSD.yml

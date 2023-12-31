@@ -1,0 +1,5 @@
+# install nginx using role
+- name: Install and configure plain nginx
+  hosts: rocky
+  roles:
+    - role: geerlingguy.nginx
