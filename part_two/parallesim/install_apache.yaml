@@ -1,0 +1,22 @@
+---
+- name: Install httpd firewall and configure web server
+  hosts: test_rocky
+  serial: 2
+  tasks:
+    - name: Install http and firewall
+      ansible.builtin.yum:
+        name:
+          - httpd
+        state: present
+    - name: Start and enable httpd service
+      ansible.builtin.service:
+        name: httpd
+        state: started
+    - name: Create a welcome page
+      ansible.builtin.copy:
+        content: >
+          This is the first web page.
+          I'm sure you will like it.
+        dest: /var/www/html/index.html
+        owner: root
+        mode: "0644"

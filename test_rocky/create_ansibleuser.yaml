@@ -1,0 +1,25 @@
+# Purpose: Create a ansible user on vagrant machine/other
+- name: Create a ansible user with name "{{ ansible_user }}"
+  hosts: all
+  become: true
+  vars:
+    ansible_user: sugrible
+  tasks:
+    - name: Create a user
+      ansible.builtin.user:
+        name: "{{ ansible_user }}"
+        comment: "Ansible user {{ ansible_user }} "
+        password: $6$OvQoKtL/1IjpLwlT$pXOCFRQrzRCuE.fVo/4eEA4CVA0SPZDhIfIHvGveodiKclFM36xKgVlIhj2l8pM9QdxC.HWXeY9MWaUStoKMH0
+        state: present
+        shell: /bin/bash
+    - name: "Add authorized key for {{ ansible_user }}"
+      ansible.posix.authorized_key:
+        key: "{{ lookup('file', '/home/preetam/.ssh/{{ ansible_user }}.pub') }}"
+        user: "{{ ansible_user }}"
+        state: present
+    - name: Add sudoers group
+      ansible.builtin.copy:
+        content: >
+          "{{ ansible_user }}" ALL=(ALL) NOPASSWD:ALL
+        dest: /etc/sudoers.d/"{{ ansible_user }}"
+        mode: "0600"

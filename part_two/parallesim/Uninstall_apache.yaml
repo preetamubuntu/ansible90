@@ -1,0 +1,9 @@
+---
+- name: Install httpd firewall and configure web server
+  hosts: test_rocky
+  tasks:
+    - name: Install Apache
+      ansible.builtin.yum:
+        name:
+          - httpd
+        state: absent
