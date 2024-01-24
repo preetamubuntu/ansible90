@@ -86,3 +86,8 @@ Vagrant.configure("2") do |config|
 end
 
 ```
+If you are going to reprovision this lab, ensure you remove the SSH key from the knownhosts file as beloe
+
+```bash
+ssh-keygen -f ~/.ssh/known_hosts -R "192.168.56.50"
+```

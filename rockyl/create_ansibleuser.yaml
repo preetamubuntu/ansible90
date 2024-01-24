@@ -26,8 +26,8 @@
     - name: Install Basic softwares
       ansible.builtin.dnf:
         name:
-          - util-linux-user
           - vim
+          - util-linux-user
           - zsh
           - wget
           - git
