@@ -20,8 +20,8 @@
     - name: Add sudoers group
       ansible.builtin.copy:
         content: >
-          "{{ ansible_user }}" ALL=(ALL) NOPASSWD:ALL
-        dest: /etc/sudoers.d/"{{ ansible_user }}"
+          {{ ansible_user }} ALL=(ALL) NOPASSWD:ALL
+        dest: /etc/sudoers.d/{{ ansible_user }}
         mode: "0600"
     - name: Install Basic softwares
       ansible.builtin.dnf:

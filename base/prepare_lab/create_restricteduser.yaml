@@ -1,0 +1,12 @@
+# create a user with limited sudo privileges
+- name: Create a user with adduser and passwd privileges
+  hosts: rocky
+  vars:
+    user_name: linda
+  tasks:
+    - name: Add user to sudoers
+      ansible.builtin.copy:
+        content: >
+          {{ user_name }} ALL=/usr/sbin/useradd,/usr/bin/passwd
+        dest: /etc/sudoers.d/{{ user_name }}
+        mode: "0600"
