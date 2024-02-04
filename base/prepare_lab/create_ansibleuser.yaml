@@ -32,4 +32,5 @@
           - wget
           - git
           - tree
+          - net-tools
         state: present
