@@ -33,4 +33,5 @@
           - git
           - tree
           - net-tools
+          - bind-utils
         state: present
