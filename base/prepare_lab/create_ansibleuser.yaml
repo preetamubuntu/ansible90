@@ -34,4 +34,5 @@
           - tree
           - net-tools
           - bind-utils
+          - lvm2
         state: present
